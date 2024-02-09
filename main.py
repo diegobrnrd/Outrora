@@ -100,7 +100,7 @@ class TelaHistoria(Screen):
                          'de seus sonhos.\nA escuridão te envolve, e risadas sussurrantes acompanham sua jornada '
                          'além da consciência.\nA confusão, silenciosa e implacável, te abraça enquanto você '
                          'descansa, te levando para além do reino da lucidez.',
-             'escolhas': ['Tentar Novamente', 'Desistir']},
+             'escolhas': ['Tentar Novamente', 'Fechar Jogo']},
             {'pergunta': 'Conforme a trilha se estreita, você começa a sentir uma presença maligna ao seu redor. '
                          '\nParece que olhares invisíveis o acompanham entre as árvores.',
              'escolhas': ['Ignorar e Continuar', 'Retornar Rapidamente']},
@@ -109,13 +109,13 @@ class TelaHistoria(Screen):
                          'preenche o ar, enquanto a voz sussurrante se transforma em risadas macabras.\nVocê é '
                          'envolvido por uma escuridão infinita, perdendo-se na confusão que se esconde entre as '
                          'sombras.',
-             'escolhas': ['Tentar Novamente', 'Desistir']},
+             'escolhas': ['Tentar Novamente', 'Fechar Jogo']},
             {'pergunta': 'Ao retornar rapidamente pelo caminho iluminado, o trajeto agora é desconhecido.\nSombras '
                          'se movem à medida que a trilha se transforma em um labirinto assustador.\nO ar fica '
                          'pesado, e a voz sussurrante se torna um lamento triste.\nVocê, incapaz de encontrar a '
                          'saída, é consumido pela confusão do labirinto,\nsua lucidez desaparece como uma vela '
                          'queimando até o fim.',
-             'escolhas': ['Tentar Novamente', 'Desistir']},
+             'escolhas': ['Tentar Novamente', 'Fechar Jogo']},
             {'pergunta': 'Enquanto avança pela escuridão, a luz vacilante da sua lanterna é a única companhia. '
                          '\nDe repente, um filhote de urso-pardo emerge à sua frente, seus olhos curiosos refletem '
                          'a luz.',
@@ -127,7 +127,7 @@ class TelaHistoria(Screen):
                          'bico-de-tamanco.\nA realidade distorcida desafia a lógica, desencadeando uma vertigem '
                          'mental insuportável.\nIncapaz de lidar com a loucura que se desenrola diante dos seus '
                          'olhos, sua mente sucumbe ao colapso,\nafundando em um abismo de confusão sem retorno.',
-             'escolhas': ['Tentar Novamente', 'Desistir']},
+             'escolhas': ['Tentar Novamente', 'Fechar Jogo']},
             {'pergunta': 'Desesperado, você corre pela escuridão; a luz da sua lanterna é insuficiente para tal '
                          'ato.\nVocê tropeça em galhos, esbarra em árvores, até que um impacto abrupto interrompe '
                          'sua fuga, fazendo-o desmaiar.\nQuando seus olhos se abrem novamente, a noite ainda domina '
@@ -215,7 +215,7 @@ class TelaHistoria(Screen):
                                  halign='left',
                                  font_style='H6',
                                  theme_text_color="Custom",
-                                 text_color=(0.5, 0, 0.1, 1))
+                                 text_color=(1, 0.961, 0.784, 1))
         # Cor do texto
         texto_pergunta.padding = [50, 0, 50, 0]
         # Adiciona pergunta a tela
@@ -227,7 +227,8 @@ class TelaHistoria(Screen):
             button = MDRaisedButton(text=escolha,
                                     on_release=self.quando_escolher,  # Chama a função quando escolher
                                     pos_hint={'center_x': 0.5},
-                                    md_bg_color=(0.5, 0, 0.1, 1),
+                                    md_bg_color=(0.004, 0.216, 0.314, 1),
+                                    text_color=(1, 0.961, 0.784, 1),
                                     opacity=0)
             # Adiciona os botões
             self.container.add_widget(button)
@@ -256,7 +257,7 @@ class TelaHistoria(Screen):
         elif self.indice_do_estado_atual == 2:  # (2)  Perdido 1
             if escolha_atual == 'Tentar Novamente':
                 self.indice_do_estado_atual = 0
-            elif escolha_atual == 'Desistir':
+            elif escolha_atual == 'Fechar Jogo':
                 app = MDApp.get_running_app()
                 app.stop()
                 return
@@ -268,14 +269,14 @@ class TelaHistoria(Screen):
         elif self.indice_do_estado_atual == 4:  # (4) Perdido 2
             if escolha_atual == 'Tentar Novamente':
                 self.indice_do_estado_atual = 0
-            elif escolha_atual == 'Desistir':
+            elif escolha_atual == 'Fechar Jogo':
                 app = MDApp.get_running_app()
                 app.stop()
                 return
         elif self.indice_do_estado_atual == 5:  # (5) Perdido 3
             if escolha_atual == 'Tentar Novamente':
                 self.indice_do_estado_atual = 0
-            elif escolha_atual == 'Desistir':
+            elif escolha_atual == 'Fechar Jogo':
                 app = MDApp.get_running_app()
                 app.stop()
                 return
@@ -287,7 +288,7 @@ class TelaHistoria(Screen):
         elif self.indice_do_estado_atual == 7:  # (7) Perdido 4
             if escolha_atual == 'Tentar Novamente':
                 self.indice_do_estado_atual = 0
-            elif escolha_atual == 'Desistir':
+            elif escolha_atual == 'Fechar Jogo':
                 app = MDApp.get_running_app()
                 app.stop()
                 return
