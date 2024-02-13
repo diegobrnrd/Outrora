@@ -52,14 +52,14 @@ class TelaInicial(Screen):
                        allow_stretch=True,
                        keep_ratio=True)
         # Configura o botão
-        start_button = MDRaisedButton(text='Iniciar Jogo',
-                                      on_release=self.troca_tela,  # Chama a função troca_tela
-                                      pos_hint={'center_x': 0.5},
-                                      md_bg_color=(0.5, 0, 0.1, 1))
+        botao_inicial = MDRaisedButton(text='Iniciar Jogo',
+                                       on_release=self.troca_tela,  # Chama a função troca_tela
+                                       pos_hint={'center_x': 0.5},
+                                       md_bg_color=(0.5, 0, 0.1, 1))
         # Adiciona imagem e botão
         layout = FloatLayout()
         layout.add_widget(imagem)
-        layout.add_widget(start_button)
+        layout.add_widget(botao_inicial)
 
         self.add_widget(layout)
 
@@ -361,8 +361,6 @@ class TelaHistoria(Screen):
         # Verifica se ainda há estados na história a exibir
         if self.indice_do_estado_atual < len(self.estados_da_historia):
             self.estado_de_exibicao()
-        #else:
-            #self.container.add_widget(MDLabel(text="Fim!", halign="center", font_style="H6"))
 
 
 # Executa o jogo
