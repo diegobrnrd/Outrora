@@ -214,7 +214,7 @@ class TelaHistoria(Screen):
                                  halign='left',
                                  font_style='H6',
                                  theme_text_color="Custom",
-                                 text_color=(1, 0.961, 0.784, 1))
+                                 text_color=(0.969, 0.902, 0.651, 1))
         # Espaçamento do texto da borda do widget
         texto_pergunta.padding = [50, 0, 50, 0]
         # Adiciona o texto ao widget
@@ -226,8 +226,8 @@ class TelaHistoria(Screen):
             button = MDRaisedButton(text=escolha,
                                     on_release=self.quando_escolher,
                                     pos_hint={'center_x': 0.5},
-                                    md_bg_color=(0.004, 0.216, 0.314, 1),
-                                    text_color=(1, 0.961, 0.784, 1),
+                                    md_bg_color=(0.902, 0.627, 0.435, 1),
+                                    text_color=(0.012, 0, 0.11, 1),
                                     opacity=0)
             # Adiciona os botões ao widget
             self.container.add_widget(button)
