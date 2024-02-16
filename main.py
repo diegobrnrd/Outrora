@@ -357,7 +357,7 @@ class TelaHistoria(Screen):
                 app = MDApp.get_running_app()
                 app.stop()
                 return
-        # Verificação para chamar a função estado de exibição novamente
+        # Verificação (loop) para chamar a função estado de exibição novamente
         if self.indice_do_estado_atual < len(self.estados_da_historia):
             self.estado_de_exibicao()
 
