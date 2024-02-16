@@ -15,10 +15,10 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 class OutroraApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # Gerenciador de tela
+        # Gerenciador de telas
         self.screen_manager = ScreenManager()
         self.tela_inicial = TelaInicial(name='tela_inicial')
-        self.tela_historia = TelaHistoria(name='tela_storia')
+        self.tela_historia = TelaHistoria(name='tela_historia')
         # Carrega a música
         self.sound = SoundLoader.load('musica.mp3')
 
@@ -26,18 +26,15 @@ class OutroraApp(MDApp):
         # Adiciona as telas ao gerenciador
         self.screen_manager.add_widget(self.tela_inicial)
         self.screen_manager.add_widget(self.tela_historia)
-
         # Reproduz a música
         self.sound.play()
-
-        # Configura a janela como tela cheia
+        # Configura o jogo para iniciar em tela cheia
         Config.set('graphics', 'fullscreen', 'auto')
         Config.write()
-
         return self.screen_manager
 
-    # Para a música ao fechar o aplicativo
-    def on_stop(self):
+    # Para a música ao fechar o jogo
+    def para_musica(self):
         if self.sound and self.sound.state == 'play':
             self.sound.stop()
             self.sound.unload()
@@ -47,45 +44,46 @@ class OutroraApp(MDApp):
 class TelaInicial(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # Configura a imagem
+        # Imagem da tela inicial
         imagem = Image(source='tela_inicial.jpg',
                        allow_stretch=True,
                        keep_ratio=True)
-        # Configura o botão
+        # Botão da tela inicial, quando pressionado chama a função troca tela
         botao_inicial = MDRaisedButton(text='Iniciar Jogo',
-                                       on_release=self.troca_tela,  # Chama a função troca_tela
+                                       on_release=self.troca_tela,
                                        pos_hint={'center_x': 0.5},
                                        md_bg_color=(0.5, 0, 0.1, 1))
-        # Adiciona imagem e botão
+        # Adiciona a imagem e o botão ao FloatLayout
         layout = FloatLayout()
         layout.add_widget(imagem)
         layout.add_widget(botao_inicial)
-
+        # Adiciona o layout ao widget
         self.add_widget(layout)
 
-    # Muda para a tela história
+    # Troca da tela inicial para a tela história
     def troca_tela(self, instance):
-        self.manager.current = 'tela_storia'
+        self.manager.current = 'tela_historia'
 
 
-# Define a tela da história do jogo
+# Define a tela história do jogo
 class TelaHistoria(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # Configura a imagem
+        # Imagem da tela história
         imagem = Image(source='historia.jpg',
                        allow_stretch=True,
                        keep_ratio=True)
-        # Adiciona a imagem
+        # Adiciona a imagem ao FloatLayout
         layout = FloatLayout()
         layout.add_widget(imagem)
-
+        # Adiciona o layout ao widget
         self.add_widget(layout)
 
-        # História do jogo
-        # Vários dicionarios dentro de uma lista
-        # Cada dicionário tem duas chaves (pergunta e escolhas)
-        # As opções de escolha estão dentro de uma lista
+        # História do jogo está armazenada em uma lista
+        # Cada elemento da lista é um dicionário
+        # Cada dicionário tem duas chaves
+        # O valor associado a chave pergunta é uma string
+        # O valor associado a chave escolhas é uma lista com n strings dentro
         self.estados_da_historia = [
             {'pergunta': 'Durante um acampamento com amigos, uma noite que era para ser tranquila se transforma '
                          'em um pesadelo.\nAo despertar, você percebe que seus amigos desapareceram.\nUm barulho '
@@ -195,55 +193,56 @@ class TelaHistoria(Screen):
              'escolhas': ['Continuar']},
             {'pergunta': 'FIM!', 'escolhas': ['Fechar Jogo']},
         ]
-        # Define a váriável de controle como zero
+        # Variável para controla a obtenção do dicionário correspondente
         self.indice_do_estado_atual = 0
         # Organiza os widgtes verticalmente
         self.container = MDBoxLayout(orientation='vertical', spacing='10')
-        # Chama a função estado_de_exibição
+        # Chama a função estado de exibição
         self.estado_de_exibicao()
+        # Adiciona o container ao widget
         self.add_widget(self.container)
 
-    # Exibe os texto e os botões
+    # Exibe o texto e os botões na tela
     def estado_de_exibicao(self):
-        # Limpa widgets antigos e exibe o estado atual da história
+        # Limpa os widgets a cada rodada
         self.container.clear_widgets()
-        # Guarda na variável estado o dicionário correspondente
-        # Acessa a lista estados da história e passa o valor do indice correspondente
+        # Em estado é armazenado o dicionário correspondente
+        # O indice de acesso será a variável indice do estado atual
         estado = self.estados_da_historia[self.indice_do_estado_atual]
-        # Guarda na variável texto_pergunta a pergunta correspondente
-        texto_pergunta = MDLabel(text=estado['pergunta'],  # Acesso ao texto via chave
+        # Em texto pergunta é armazenada o valor (string) da chave pergunta
+        texto_pergunta = MDLabel(text=estado['pergunta'],
                                  halign='left',
                                  font_style='H6',
                                  theme_text_color="Custom",
                                  text_color=(1, 0.961, 0.784, 1))
-        # Cor do texto
+        # Espaçamento do texto da borda do widget
         texto_pergunta.padding = [50, 0, 50, 0]
-        # Adiciona pergunta a tela
+        # Adiciona o texto ao widget
         self.container.add_widget(texto_pergunta)
         # Um for é passado na chave escolhas
-        # Que tem como valores uma lista
         for escolha in estado['escolhas']:
-            # Configuração dos botões
+            # Cada elemento que tiver no lista escolhas é criado com seu respectivo texto
+            # Quando pressionado chama a função quando escolher
             button = MDRaisedButton(text=escolha,
-                                    on_release=self.quando_escolher,  # Chama a função quando escolher
+                                    on_release=self.quando_escolher,
                                     pos_hint={'center_x': 0.5},
                                     md_bg_color=(0.004, 0.216, 0.314, 1),
                                     text_color=(1, 0.961, 0.784, 1),
                                     opacity=0)
-            # Adiciona os botões
+            # Adiciona os botões ao widget
             self.container.add_widget(button)
             # Animação fade-in nos botões
             animacao = Animation(opacity=1, duration=0.5)
             animacao.start(button)
 
-    # Lida com as escolhas do jogador e avançar na história
+    # Controle da história
     def quando_escolher(self, atual):
-        # Guarda o texto do botão que foi pressionado na variável escolha_atual
+        # Guarda o texto do botão que foi pressionado na variável escolha atual
         escolha_atual = atual.text
-        # Lógica do controle da história
         # Verifica qual o valor do indice do estado atual
         # Verifica qual botão foi pressionado
-        # Define o nome valor do indice do estado atual
+        # Define o novo valor do indice do estado atual
+        # Fecha o jogo em alguns casos
         if self.indice_do_estado_atual == 0:  # (0) Contexto Inicial
             if escolha_atual == 'Investigar Imediatamente':
                 self.indice_do_estado_atual = 1
@@ -358,7 +357,7 @@ class TelaHistoria(Screen):
                 app = MDApp.get_running_app()
                 app.stop()
                 return
-        # Verifica se ainda há estados na história a exibir
+        # Verificação para chamar a função estado de exibição novamente
         if self.indice_do_estado_atual < len(self.estados_da_historia):
             self.estado_de_exibicao()
 
