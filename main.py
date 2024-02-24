@@ -1,10 +1,13 @@
 # Importação de módulos (KivyMD e Kivy)
+from random import choice
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.boxlayout import MDBoxLayout
+from kivy.clock import Clock
 from kivy.config import Config
 from kivy.uix.image import Image
+from kivy.uix.video import Video
 from kivy.animation import Animation
 from kivy.core.audio import SoundLoader
 from kivy.uix.floatlayout import FloatLayout
@@ -19,13 +22,21 @@ class OutroraApp(MDApp):
         self.screen_manager = ScreenManager()
         self.tela_inicial = TelaInicial(name='tela_inicial')
         self.tela_historia = TelaHistoria(name='tela_historia')
+        self.tela_creditos = TelaCreditos(name='tela_creditos')
+        # Lista de músicas
+        self.lista_de_musicas = ['musica.mp3', 'musica_2.mp3', 'musica_3.mp3', 'musica_4.mp3']
+        # Escolha da musica aleatoriamente
+        self.musica_aleatoria = choice(self.lista_de_musicas)
         # Carrega a música
-        self.sound = SoundLoader.load('musica.mp3')
+        self.sound = SoundLoader.load(self.musica_aleatoria)
 
     def build(self):
         # Adiciona as telas ao gerenciador
         self.screen_manager.add_widget(self.tela_inicial)
         self.screen_manager.add_widget(self.tela_historia)
+        self.screen_manager.add_widget(self.tela_creditos)
+        # Loop na música
+        self.sound.loop = True
         # Reproduz a música
         self.sound.play()
         # Configura o jogo para iniciar em tela cheia
@@ -191,7 +202,6 @@ class TelaHistoria(Screen):
             {'pergunta': 'Um silêncio melancólico preenche o espaço, enquanto você mergulha novamente na névoa de '
                          'sua própria mente,\nenvolvido em uma atmosfera de perda e saudade.',
              'escolhas': ['Continuar']},
-            {'pergunta': 'FIM!', 'escolhas': ['Fechar Jogo']},
         ]
         # Variável para controla a obtenção do dicionário correspondente
         self.indice_do_estado_atual = 0
@@ -223,17 +233,17 @@ class TelaHistoria(Screen):
         for escolha in estado['escolhas']:
             # Cada elemento que tiver no lista escolhas é criado com seu respectivo texto
             # Quando pressionado chama a função quando escolher
-            button = MDRaisedButton(text=escolha,
-                                    on_release=self.quando_escolher,
-                                    pos_hint={'center_x': 0.5},
-                                    md_bg_color=(0.902, 0.627, 0.435, 1),
-                                    text_color=(0.012, 0, 0.11, 1),
-                                    opacity=0)
+            botao = MDRaisedButton(text=escolha,
+                                   on_release=self.quando_escolher,
+                                   pos_hint={'center_x': 0.5},
+                                   md_bg_color=(0.902, 0.627, 0.435, 1),
+                                   text_color=(0.012, 0, 0.11, 1),
+                                   opacity=0)
             # Adiciona os botões ao widget
-            self.container.add_widget(button)
+            self.container.add_widget(botao)
             # Animação fade-in nos botões
             animacao = Animation(opacity=1, duration=0.5)
-            animacao.start(button)
+            animacao.start(botao)
 
     # Controle da história
     def quando_escolher(self, atual):
@@ -351,15 +361,70 @@ class TelaHistoria(Screen):
                 self.indice_do_estado_atual = 24
         elif self.indice_do_estado_atual == 24:  # (24) FINAL
             if escolha_atual == 'Continuar':
-                self.indice_do_estado_atual = 25
-        elif self.indice_do_estado_atual == 25:  # (25) FINAL
-            if escolha_atual == 'Fechar Jogo':
-                app = MDApp.get_running_app()
-                app.stop()
-                return
+                self.troca_tela_2()
         # Verificação (loop) para chamar a função estado de exibição novamente
         if self.indice_do_estado_atual < len(self.estados_da_historia):
             self.estado_de_exibicao()
+
+    # Para a música de tocar e troca para a tela créditos
+    def troca_tela_2(self, instance=None):
+        app = MDApp.get_running_app()
+        if app.sound and app.sound.state == 'play':
+            app.sound.stop()
+            app.sound.unload()
+        self.manager.current = 'tela_creditos'
+
+
+class TelaCreditos(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Inicia o video pausado
+        self.video_creditos = Video(source='creditos.mp4',
+                                    state='pause',
+                                    options={'allow_stretch': True, 'keep_ratio': True})
+        # Botão da tela créditos
+        self.fechar_jogo = MDRaisedButton(text='Fechar Jogo',
+                                          on_release=self.fecha_jogo,
+                                          pos_hint={'center_x': 0.5, 'center_y': 0.050},
+                                          md_bg_color=(1, 1, 1, 1),
+                                          text_color=(0, 0, 0, 1),
+                                          opacity=0)
+        # Adiciona o video e o botão ao widget
+        self.add_widget(self.video_creditos)
+        self.add_widget(self.fechar_jogo)
+
+    # Ao entrar na tela créditos
+    def on_enter(self):
+        super().on_enter()
+        # Chama o método play video
+        self.play_video()
+        # Agenda a exibição do botão fechar jogo na tela
+        Clock.schedule_once(self.mostrar_botao_fechar_jogo, 60.5)
+
+    # Reproduz o vídeo
+    def play_video(self):
+        self.video_creditos.state = 'play'
+
+    # Ao sair da tela créditos
+    def on_leave(self):
+        super().on_leave()
+        # Chama o método pause video
+        self.pause_video()
+
+    # Pausa o vídeo
+    def pause_video(self):
+        self.video_creditos.state = 'pause'
+
+    # Exibi o botão Fechar Jogo
+    def mostrar_botao_fechar_jogo(self, dt):
+        self.fechar_jogo.opacity = 1
+
+    # Função para fechar o jogo
+    @staticmethod
+    def fecha_jogo(instance):
+        app = MDApp.get_running_app()
+        app.stop()
+        return
 
 
 # Executa o jogo
