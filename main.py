@@ -89,7 +89,6 @@ class TelaHistoria(Screen):
         layout.add_widget(imagem)
         # Adiciona o layout ao widget
         self.add_widget(layout)
-
         # História do jogo está armazenada em uma lista
         # Cada elemento da lista é um dicionário
         # Cada dicionário tem duas chaves
