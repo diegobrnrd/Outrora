@@ -414,7 +414,7 @@ class TelaCreditos(Screen):
     def pause_video(self):
         self.video_creditos.state = 'pause'
 
-    # Exibi o botão Fechar Jogo
+    # Exibi o botão fechar Jogo
     def mostrar_botao_fechar_jogo(self, dt):
         self.fechar_jogo.opacity = 1
 
