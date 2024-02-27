@@ -391,7 +391,7 @@ class TelaCreditos(Screen):
         # Chama o método play video
         self.play_video()
         # Agenda a adição do botão fechar jogo na tela
-        Clock.schedule_once(self.adicionar_botao_fechar_jogo, 60.5)
+        Clock.schedule_once(self.adicionar_botao_fechar_jogo, 60.7)
 
     # Reproduz o vídeo
     def play_video(self):
