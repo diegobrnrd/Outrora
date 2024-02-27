@@ -377,28 +377,21 @@ class TelaHistoria(Screen):
 class TelaCreditos(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.fechar_jogo = None
         # Inicia o video pausado
         self.video_creditos = Video(source='creditos.mp4',
                                     state='pause',
                                     options={'allow_stretch': True, 'keep_ratio': True})
-        # Botão da tela créditos
-        self.fechar_jogo = MDRaisedButton(text='Fechar Jogo',
-                                          on_release=self.fecha_jogo,
-                                          pos_hint={'center_x': 0.5, 'center_y': 0.050},
-                                          md_bg_color=(1, 1, 1, 1),
-                                          text_color=(0, 0, 0, 1),
-                                          opacity=0)
-        # Adiciona o video e o botão ao widget
+        # Adiciona o video ao widget
         self.add_widget(self.video_creditos)
-        self.add_widget(self.fechar_jogo)
 
     # Ao entrar na tela créditos
     def on_enter(self):
         super().on_enter()
         # Chama o método play video
         self.play_video()
-        # Agenda a exibição do botão fechar jogo na tela
-        Clock.schedule_once(self.mostrar_botao_fechar_jogo, 60.5)
+        # Agenda a adição do botão fechar jogo na tela
+        Clock.schedule_once(self.adicionar_botao_fechar_jogo, 60.5)
 
     # Reproduz o vídeo
     def play_video(self):
@@ -414,9 +407,15 @@ class TelaCreditos(Screen):
     def pause_video(self):
         self.video_creditos.state = 'pause'
 
-    # Exibi o botão fechar Jogo
-    def mostrar_botao_fechar_jogo(self, dt):
-        self.fechar_jogo.opacity = 1
+    # Adiciona o botão fechar Jogo
+    def adicionar_botao_fechar_jogo(self, dt):
+        self.fechar_jogo = MDRaisedButton(text='Fechar Jogo',
+                                          on_release=self.fecha_jogo,
+                                          pos_hint={'center_x': 0.5, 'center_y': 0.050},
+                                          md_bg_color=(1, 1, 1, 1),
+                                          text_color=(0, 0, 0, 1))
+        # Adiciona o botão ao widget
+        self.add_widget(self.fechar_jogo)
 
     # Função para fechar o jogo
     @staticmethod
