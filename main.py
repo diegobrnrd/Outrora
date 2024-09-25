@@ -222,7 +222,7 @@ class TelaHistoria(Screen):
         texto_pergunta = MDLabel(text=estado['pergunta'],
                                  halign='left',
                                  font_style='H6',
-                                 theme_text_color="Custom",
+                                 theme_text_color='Custom',
                                  text_color=(0.969, 0.902, 0.651, 1))
         # Espaçamento do texto da borda do widget
         texto_pergunta.padding = [50, 0, 50, 0]
