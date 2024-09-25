@@ -6,7 +6,7 @@ Projeto elaborado como componente da disciplina PISI I (Projeto Interdisciplinar
 
 ## Descrição do Projeto
 
-O projeto é um RPG interativo no qual as escolhas do jogador influenciam o desenvolvimento da história.
+O projeto trata-se de um RPG interativo onde as escolhas do jogador moldam o desenvolvimento da história.
 
 ## Framework
 
