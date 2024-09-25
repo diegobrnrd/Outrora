@@ -374,6 +374,7 @@ class TelaHistoria(Screen):
         self.manager.current = 'tela_creditos'
 
 
+# Classe responsável pela tela de créditos do jogo
 class TelaCreditos(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
