@@ -121,7 +121,7 @@ python main.py
 
 ---
 
-## 👤 Autor
+## Autor
 
 [**Diego Bernardo**](https://github.com/diegobrnrd)
 
