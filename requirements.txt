@@ -1,2 +1,2 @@
 kivy
-kivymd
+kivymd==1.1.1
