@@ -1,14 +1,14 @@
 # Outrora
 
-RPG **interativo** onde suas escolhas moldam o desenvolvimento da história.
+**Interactive** RPG where your choices shape the development of the story.
 
-![Tela Inicial](assets/images/tela_inicial.png)
-![Firmamento](assets/images/firmamento.png)
-![Créditos](assets/images/creditos.png)
+![Home Screen](assets/images/tela_inicial.png)
+![Firmament](assets/images/firmamento.png)
+![Credits](assets/images/creditos.png)
 
 ---
 
-## Tecnologias / Frameworks
+## Technologies / Frameworks
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Kivy](https://img.shields.io/badge/Kivy-333333?style=for-the-badge&logo=python&logoColor=white)
@@ -16,17 +16,17 @@ RPG **interativo** onde suas escolhas moldam o desenvolvimento da história.
 
 ---
 
-## Requisitos
+## Requirements
 
-- **Python 3.8 a 3.13**  
-  - Recomendado no Windows: **Python 3.12** ou **3.13**
-- Dependências instaladas via `requirements.txt`
+- **Python 3.8 to 3.13**
+  - Recommended on Windows: **Python 3.12** or **3.13**
+- Dependencies installed via `requirements.txt`
 
-> Dica: usar ambiente virtual (`venv`) ajuda a evitar conflitos de dependências.
+> Tip: using a virtual environment (`venv`) helps avoid dependency conflicts.
 
 ---
 
-## Estrutura do projeto
+## Project structure
 
 ```text
 .
@@ -44,32 +44,32 @@ RPG **interativo** onde suas escolhas moldam o desenvolvimento da história.
     └── audio/
 ```
 
-### Pastas e arquivos principais
+### Main folders and files
 
-- `main.py`: ponto de entrada da aplicação.
-- `data/story.py`: dados/estrutura da história (ex.: cenas, escolhas e consequências).
-- `assets/`: recursos do jogo (imagens e áudio).
+- `main.py`: application entry point.
+- `data/story.py`: story data/structure (e.g., scenes, choices, and consequences).
+- `assets/`: game resources (images and audio).
 
 ---
 
-## Como executar (Windows / Linux / macOS)
+## How to run (Windows / Linux / macOS)
 
-### 1) Clonar o repositório
+### 1) Clone the repository
 
 ```bash
 git clone https://github.com/diegobrnrd/outrora.git
 cd outrora
 ```
 
-### 2) Criar e ativar um ambiente virtual (recomendado)
+### 2) Create and activate a virtual environment (recommended)
 
-Criar:
+Create:
 
 ```bash
 python -m venv .venv
 ```
 
-Ativar:
+Activate:
 
 - Windows (PowerShell):
   ```powershell
@@ -84,13 +84,13 @@ Ativar:
   source .venv/bin/activate
   ```
 
-### 3) Instalar dependências
+### 3) Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4) Rodar o jogo
+### 4) Run the game
 
 ```bash
 python main.py
@@ -98,36 +98,36 @@ python main.py
 
 ---
 
-## Solução de problemas (rápido)
+## Troubleshooting (quick)
 
-- **`python` não encontrado**: verifique se o Python está instalado e no `PATH`.
-- **Erro ao instalar dependências**: atualize o pip:
+- **`python` not found**: check whether Python is installed and in the `PATH`.
+- **Error installing dependencies**: update pip:
   ```bash
   python -m pip install --upgrade pip
   ```
-- **Ambiente virtual não ativa no PowerShell**: talvez seja necessário liberar scripts:
+- **Virtual environment won't activate in PowerShell**: you may need to allow scripts:
   ```powershell
   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
   ```
 
 ---
 
-## Roadmap (ideias)
+## Roadmap (ideas)
 
-- [ ] Novas ramificações e finais alternativos
-- [ ] Melhorias na UI/UX
-- [ ] Trilha sonora e efeitos sonoros integrados
-- [ ] Empacotamento para Windows (executável)
+- [ ] New branches and alternative endings
+- [ ] UI/UX improvements
+- [ ] Integrated soundtrack and sound effects
+- [ ] Packaging for Windows (executable)
 
 ---
 
-## Autor
+## Author
 
 [**Diego Bernardo**](https://github.com/diegobrnrd)
 
 ---
 
-## Licença
+## License
 
-Este projeto está licenciado sob a **Apache License 2.0**.  
-Veja o arquivo [LICENSE](LICENSE).
+This project is licensed under the **Apache License 2.0**.
+See the [LICENSE](LICENSE) file.
